@@ -1,0 +1,445 @@
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+
+# define EPF_RATE 0.15
+# define ETF_RATE 0.07
+# define GEN_TIME (8 * 20)
+# define PWD "inamkhan\0"
+# define UN "INAMKHAN\0"
+
+struct Employee
+{
+    char name[50];
+    char address[100];
+    char phone[11];
+    char id[5];
+    float salary;
+    float hours;
+} emp[50];
+int i=0;
+void welcome_message(void);
+void get_password(void);
+void main_menu(void);
+void manage_employee(void);
+void add_employee(void);
+void delete_employee(void);
+void edit_employee(void);
+void search_employee(void);
+void print_report(void);
+void print_slip(void);
+void emp_menu(void);
+void exit_message(void);
+
+int main()
+{
+    system("COLOR F5");
+    char menuOpt;
+    int isExit = 0;
+    welcome_message();
+    get_password();
+    do
+    {
+        main_menu();
+        fflush(stdin);
+        menuOpt = (char)getch();
+        switch(menuOpt)
+        {
+        case '1':
+        {
+            manage_employee();
+            break;
+        }
+        case '2':
+        {
+            print_report();
+            break;
+        }
+        case '3':
+        {
+            print_slip();
+            break;
+        }
+        case '4':
+        {
+            isExit = 1;
+            break;
+        }
+        default:
+        {
+            system("cls");
+            printf("Invalid Option!");
+            fflush(stdin);
+            getch();
+            break;
+        }
+        }
+    }
+    while(isExit == 0);
+    exit_message();
+    fflush(stdin);
+    getch();
+    return (0);
+}
+
+void welcome_message(void)
+{
+    system("cls");
+    printf("\n\n\t   WELCOME\n");
+    printf("\n\n    PAYROLL MANAGEMENT SYSTEM\n");
+    printf( "_______________________________________\n\n\n\n");
+    printf(" SUBMITTED TO\n\n");
+    printf("    Farzana Akter\n");
+    printf("    Lecturear,\n    Daffodil International University\n\n\n");
+    printf(" Faculty Name\n");
+    printf("\tCoumpter Science & Engineering");
+    printf("\n\n");
+    printf("\t\t\t\t\t");
+    printf("SUBMITTED BY\n\n");
+    printf("\t\t\t\t\t");
+    printf("INAM ULLAH KHAN(191-15-2575)\n");
+   
+
+
+    fflush(stdin);
+    printf("Press Enter a keywoard to continue>>>");
+    getch();
+}
+
+void main_menu(void)
+{
+    system("cls");
+    printf("MENU\n");
+    printf(" ----\n");
+    printf("[1] : Manage Employees\n");
+    printf("[2] : Print Report\n");
+    printf("[3] : Print Slip\n");
+    printf("[4] : Exit\n\n");
+    printf(" >>> ");
+}
+
+void manage_employee(void)
+{
+    char menuOpt;
+    int isExit = 0;
+    do
+    {
+        emp_menu();
+        fflush(stdin);
+        menuOpt = (char)getch();
+        switch(menuOpt)
+        {
+        case '1':
+        {
+            add_employee();
+            break;
+        }
+        case '2':
+        {
+            delete_employee();
+            break;
+        }
+        case '3':
+        {
+            edit_employee();
+            break;
+        }
+        case '4':
+        {
+            search_employee();
+            break;
+        }
+        case '5':
+        {
+            isExit = 1;
+            fflush(stdin);
+            break;
+        }
+        default:
+        {
+            system("cls");
+            printf("Invalid Option!");
+            getch();
+        }
+        }
+    }
+    while(isExit == 0);
+}
+
+void add_employee(void)
+{
+
+
+    system("cls");
+
+
+    printf("Name: ");
+    fflush(stdin);
+    gets(emp[i].name);
+    printf("Address: ");
+    fflush(stdin);
+    gets(emp[i].address);
+    printf("Phone: ");
+    fflush(stdin);
+    gets(emp[i].phone);
+    printf("ID: ");
+    fflush(stdin);
+    gets(emp[i].id);
+    printf("Salary: ");
+    fflush(stdin);
+    scanf("%f", &emp[i].salary);
+    printf("Hours: ");
+    fflush(stdin);
+    scanf("%f", &emp[i].hours);
+    i++;
+    system("cls");
+    printf("Done Entering New Record >>> ");
+    getch();
+}
+
+void delete_employee(void)
+{
+
+    char idDel[5];
+
+
+    system("cls");
+    printf("Enter Employee ID to Delete : ");
+    fflush(stdin);
+    gets(idDel);
+
+    int j,d=0;
+    for(j=0; j<50; j++)
+    {
+        if((strcmp(emp[j].id,idDel)) == 0)
+        {
+
+            strcpy(emp[j].address, "\0");
+            strcpy(emp[j].name, "\0");
+
+            strcpy(emp[j].id, "\0");
+            strcpy(emp[j].phone, "\0");
+
+            emp[j].salary= 0.0;
+
+            emp[j].hours= 0.0;
+            d=1;
+            break;
+
+        }
+    }
+
+    system("cls");
+    if(d==1)
+        printf("Done Deleting >>> ");
+    else
+        printf("Id not found>>> ");
+    fflush(stdin);
+    getch();
+}
+
+void edit_employee(void)
+{
+
+    char idEdit[5];
+    float salary;
+    float hours;
+
+    system("cls");
+    printf("Enter Employee ID to Edit : ");
+    fflush(stdin);
+    gets(idEdit);
+    int j,d=0;
+    for(j=0; j<50; j++)
+    {
+
+        if((strcmp(emp[j].id, idEdit)) == 0)
+        {
+            system("cls");
+            printf("Enter new basic salary : ");
+            fflush(stdin);
+            scanf("%f", &salary);
+            printf("Enter the new number of hours worked : ");
+            fflush(stdin);
+            scanf("%f", &hours);
+            emp[j].salary=salary;
+            emp[j].hours=hours;
+            d=1;
+        }
+    }
+
+
+    system("cls");
+    if(d==1)
+        printf("Done Editing >>> ");
+    else
+        printf("Id not found");
+    fflush(stdin);
+    getch();
+}
+
+void search_employee(void)
+{
+    int j,d=0;
+    char idSearch[5];
+    system("cls");
+    printf("Enter the Employee ID to Search : ");
+    fflush(stdin);
+    gets(idSearch);
+
+    for(j=0; j<50; j++)
+    {
+        if((strcmp(emp[j].id, idSearch)) == 0)
+        {
+            system("cls");
+            printf("Name: %s\n", emp[j].name);
+            printf("Address: %s\n", emp[j].address);
+            printf("Phone: %s\n", emp[j].phone);
+            printf("ID: %s\n", emp[j].id);
+            printf("Salary: %.2f\n", emp[j].salary);
+            printf("Hours: %.2f\n\n", emp[j].hours);
+            d=1;
+            break;
+        }
+
+    }
+    if(d!=1)
+    {
+        system("cls");
+        printf("Id not found\n\n");
+    }
+
+    printf("Press Enter to continue>>>");
+    fflush(stdin);
+    getch();
+}
+
+void print_report(void)
+{
+
+    int j,d=0;
+    float epf;
+    float etf;
+    float netSal;
+    float ot, otRate, otHrs;
+
+    system("cls");
+
+    printf("\n");
+    for(j=0; j<50; j++)
+    {
+        epf = emp[j].salary * EPF_RATE;
+        etf = emp[j].salary * ETF_RATE;
+        otHrs = emp[j].hours - GEN_TIME;
+        otRate =emp[j]. salary / GEN_TIME;
+        if(otHrs > 0)
+        {
+            ot = otHrs * otRate;
+        }
+        else
+        {
+            ot = 0;
+            otHrs = 0;
+        }
+        netSal = emp[j].salary - (epf + etf) + ot;
+        printf(" Id=%s    salary=%5.2f     Works hours=%3.2f  OT HOURES= %3.2f  OT=%3.2f   EPF=%5.2f ETF= %5.2f %5.2f NETSAL=%5.2f\n", emp[j].id, emp[j].salary, emp[j].hours, otHrs, ot, epf, etf, netSal);
+    }
+    getch();
+
+}
+
+void print_slip(void)
+{
+    int j,d=0;
+    char empId[5];
+
+    float epf;
+    float etf;
+    float netSal;
+    float ot, otRate, otHrs;
+
+    system("cls");
+    printf("Enter Employee ID to print : ");
+    fflush(stdin);
+    gets(empId);
+    for(j=0; j<50; j++)
+    {
+        if((strcmp(emp[j].id, empId)) == 0)
+        {
+            epf = emp[j].salary * EPF_RATE;
+            etf = emp[j].salary * ETF_RATE;
+            otHrs = emp[j].hours - GEN_TIME;
+            otRate = emp[j].salary / GEN_TIME;
+            if(otHrs > 0)
+            {
+                ot = otHrs * otRate;
+            }
+            else
+            {
+                ot = 0;
+                otHrs = 0;
+            }
+            netSal = emp[j].salary - (epf + etf) + ot;
+            system("cls");
+            printf("Name: %s\n", emp[j].name);
+            printf("Address: %s\n", emp[j].address);
+            printf("Phone: %s\n",emp[j].phone);
+            printf("id: %s\n", emp[j].id);
+            printf("Basic Salary: %.2f\n", emp[j].salary);
+            printf("Total Hours: %.2f\n", emp[j].hours);
+            printf("OT Hours: %.2f\n", otHrs);
+            printf("OT Rate: %.2f\n", otRate);
+            printf("OT Amount: %.2f\n", ot);
+            printf("EPF: %.2f\n", epf);
+            printf("ETF: %.2f\n", etf);
+            printf("Net Salary: %.2f\n", netSal);
+            d=1;
+            break;
+        }
+
+    }
+    if(d==1)
+        printf("Done >>> ");
+    else
+        printf("Id not found>>");
+    fflush(stdin);
+    printf("Press Enter to continue>>>");
+    getch();
+}
+
+void get_password(void)
+{
+    char username[10];
+    char password[7];
+    do
+    {
+        system("cls");
+        printf("\n\n\n\t\t\tEnter User Name >>> ");
+        fflush(stdin);
+        gets(username);
+        printf("\n\t\t\tEnter Password >>> ");
+        fflush(stdin);
+        gets(password);
+    }
+    while((strcmp(password, PWD)) != 0 && (strcmp(username, UN)) != 0);
+}
+
+void emp_menu(void)
+{
+    system("cls");
+    printf("MENU\n");
+    printf(" ----\n");
+    printf("[1] : Add Employee\n");
+    printf("[2] : Delete Employee\n");
+    printf("[3] : Edit Employee\n");
+    printf("[4] : Search Employee\n");
+    printf("[5] : Go Back\n\n");
+    printf(" >>> ");
+}
+
+void exit_message(void)
+{
+    system("cls");
+    printf("THANK YOU!\n");
+    printf(">>> ");
+}
